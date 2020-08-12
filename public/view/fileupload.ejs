@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>乐鸽商户平台</title>
+    <link rel="short icon"  href="/static/乐鸽.png"></link>
+</head>
+<body style=" background:
+url(/static/back/2.jpg) no-repeat center center fixed; background-size: 100%;">
+<br/>
+<center>
+    单文件
+    <form action="/fileupload" method="post" enctype="multipart/form-data">
+        <input type="text" name="title1" id="" placeholder="新闻标题"/><br/>
+        <input type="text" name="keywords" id="" placeholder="关键词"/><br/>
+        <input type="text" name="author" id="" placeholder="作者" /><br/>
+        <input type="file" name="file" id="" /><br/>
+        <input type="text" name="status" id="" placeholder="状态" /><br/>
+        <input type="submit" value="提交">
+    </form>
+    多文件
+    <form action="/fileuploads" method="post" enctype="multipart/form-data">
+        <input type="text" name="title1" id="" placeholder="新闻标题"/><br/>
+        <input type="text" name="keywords" id="" placeholder="关键词"/><br/>
+        <input type="text" name="author" id="" placeholder="作者" /><br/>
+        <input type="file" name="file" id="" /><br/>
+        <input type="file" name="file" id="" /><br/>
+        <input type="file" name="file" id="" /><br/>
+        <input type="text" name="status" id="" placeholder="状态" /><br/>
+        <input type="submit" value="提交">
+    </form>
+</center>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>乐鸽商户平台</title>
+    <link rel="short icon"  href="/static/乐鸽.png"></link>
+</head>
+<!--<link rel="stylesheet" type="text/css" href="/static/layui/css/layui.css">-->
+<link rel="stylesheet" type="text/css" href="/static/layui/css/bootstrap.min.css">
+<style>
+    label {display:inline-block; width: 10em; margin-right: 1em; text-align: right; }
+</style>
+<body style=" background:
+url(/static/back/2.jpg) no-repeat center center fixed; background-size: 100%;">
+<div style="height: 40px;width: 100%">
+    账户:<input name="accuont" type="text" placeholder="输入数字/英文/符号" id="account">
+    商户名:<input type="text" placeholder="输入中文/英文/数字">
+    主收款账号:<input type="text" placeholder="输入数字"><br/>
+    银行卡号:<input type="text" placeholder="输入数字">
+    <button class="btn btn-danger" style="margin-left: 40px" id="query">查询</button>
+    <button class="btn btn-danger" style="margin-left: 40px" id="reset">重置</button>
+</div>
+<hr style="color: silver">
+<center>
+
+    <form action="/shanghu/changepassword" id="forms" method="post">
+        <label>账户:</label> <input  name="account" id="accounts" type="text" style="border: 0px;background-color: transparent;" />
+        <br/>
+        <label>修改密码:</label><input type="password" placeholder="输入初始密码" name="password" id="password">
+    </form>
+    <button class="btn btn-success"  id="submit" style="margin-top: 20px">确认修改</button>&nbsp;
+
+</center>
+
+<script src="/static/jquery-3.5.1/jquery-3.5.1.js"></script>
+<script>
+    $(function () {
+
+        $("#accounts").val('');
+        $("#password").val('');
+    })
+    //修改密码
+    $("#submit").click(function () {
+        alert("密码修改成功");
+        $("#forms").submit();
+    })
+    //重置
+    $("#reset").click(function () {
+        $("#account").val('');
+    })
+    //查询
+    $("#query").click(function (){
+        var account = $("#account").val()
+        $.ajax({
+            url:"/shanghu/cpassword?account="+account,
+            type:"GET",
+            dataType:"text",
+            success:function(data) {
+//              alert();
+                $("#accounts").val($("#account").val());
+            },
+            error:function (result) {
+                $("#accounts").val('');
+                alert("该用户不存在");
+            }
+        });
+    })
+</script>
+</body>
+</html>

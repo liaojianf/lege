@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>乐鸽运维平台</title>
+    <link rel="shortcut icon" type="image/icon" href="/static/乐鸽.png">
+    <link rel="stylesheet" href="/static/layui/css/layui.css"/>
+    <script src="/static/jquery-3.5.1/jquery-3.5.1.js"></script>
+    <!--<script type="text/javascript" src="../layui/layui.js"></script>-->
+</head>
+<style type="text/css">
+    .layui-nav-child dd a {
+        text-align: center;
+    }
+
+    .rightmenu {
+        display: none;
+        position: absolute;
+        border: 0.8px solid gainsboro;
+        background-color: white;
+        padding: 5px;
+        opacity: 0.9;
+    }
+
+    .rightmenu li:hover {
+        background-color: gainsboro;
+    }
+</style>
+
+
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <!--导航栏头部-->
+    <div class="layui-header">
+        <div class="layui-logo">
+            <i  style="font-size: 25px;line-height: initial;">
+                <img src="/static/乐鸽.png" style="width: 40px;height: 40px;">乐鸽运维平台</i>
+        </div>
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <a href="javascript:;">
+                    <img src="/static/headphoto/<%= head%>.jpg" class="layui-nav-img">
+                    <%= admin%>
+                </a>
+                <dl class="layui-nav-child">
+                    <dd>
+                        <a href="">基本资料</a>
+                    </dd>
+                    <dd>
+                        <a href="">安全设置</a>
+                    </dd>
+                    <dd>
+                        <a href="/loginout">退出登陆</a>
+                    </dd>
+                </dl>
+            </li>
+        </ul>
+    </div>
+
+    <!--侧边栏-->
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree" lay-filter="test"><br />
+                <li class="layui-nav-item">
+                    <!--！！！！客户没有登陆，首页即是登陆注册页面；用户若登录，首页则是欢迎页-->
+                    <a href="#" data-url="/index" data-title="首页" data-type="tabAdd" data-id="0" class="site-demo-active">首页</a>
+                </li>
+                <li class="layui-nav-item ">
+                    <a  href="javascript:;">&nbsp;&nbsp;商户管理</a>
+                    <dl class="layui-nav-child">
+                        <dd>
+                            <a href="javascript:;" data-url="/getUser" data-title="员工管理" data-type="tabAdd" data-id="1" class="site-demo-active">员工管理</a>
+                        </dd>
+                        <dd>
+                            <a href="javascript:;" data-url="/shanghu/toOpenCcount" data-title="快速开户" data-type="tabAdd" data-id="2" class="site-demo-active">快速开户</a>
+                        </dd>
+                        <dd>
+                            <a href="javascript:;" data-url="/shanghu/tocpassword" data-title="密码修改" data-type="tabAdd" data-id="3" class="site-demo-active">密码修改</a>
+                        </dd>
+                        <dd>
+                            <a href="javascript:;" data-url="/shanghu/tobank" data-title="绑定银行卡" data-type="tabAdd" data-id="4" class="site-demo-active">绑定银行卡</a>
+                        </dd>
+                        <dd>
+                            <a href="javascript:;" data-url="/shanghu/tocheckuser" data-title="商户信息查询" data-type="tabAdd" data-id="41" class="site-demo-active">商户信息查询</a>
+                        </dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <a  href="javascript:;">&nbsp;&nbsp;设备管理</a>
+                    <dl class="layui-nav-child">
+                        <dd>
+                            <a href="javascript:;" data-url="/3" data-title="设备生产" data-type="tabAdd" data-id="42" class="site-demo-active">设备生产</a>
+                        </dd>
+                        <dd>
+                            <a href="javascript:;" data-url="/4" data-title="设备绑定" data-type="tabAdd" data-id="5" class="site-demo-active">设备绑定</a>
+                        </dd>
+                        <dd>
+                            <a href="javascript:;" data-url="/5" data-title="设备转送" data-type="tabAdd" data-id="6" class="site-demo-active">设备转送</a>
+                        </dd>
+                        <dd>
+                            <a href="javascript:;" data-url="/6" data-title="设备查询" data-type="tabAdd" data-id="7" class="site-demo-active">设备查询</a>
+                        </dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item ">
+                    <a  href="javascript:;">&nbsp;&nbsp;数据管理</a>
+                    <dl class="layui-nav-child">
+                        <dd>
+                            <a href="javascript:;" data-url="/7" data-title="订单日志" data-type="tabAdd" data-id="8" class="site-demo-active">订单日志</a>
+                        </dd>
+                        <dd>
+                            <a href="javascript:;" data-url="/8" data-title="记账日志" data-type="tabAdd" data-id="9" class="site-demo-active">记账日志</a>
+                        </dd>
+                        <dd>
+                            <a href="javascript:;" data-url="/9" data-title="结算查询" data-type="tabAdd" data-id="10" class="site-demo-active">结算查询</a>
+                        </dd>
+
+                    </dl>
+                </li>
+                <li class="layui-nav-item ">
+                    <a  href="javascript:;">&nbsp;&nbsp;商品管理</a>
+                    <dl class="layui-nav-child">
+                        <dd>
+                            <a href="javascript:;" data-url="/10" data-title="公共商库" data-type="tabAdd" data-id="11" class="site-demo-active">公共商库</a>
+                        </dd>
+                        <dd>
+                            <a href="javascript:;" data-url="/11" data-title="商品审核" data-type="tabAdd" data-id="12" class="site-demo-active">商品审核</a>
+                        </dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item ">
+                    <a  href="javascript:;">&nbsp;&nbsp;营销中心</a>
+                    <dl class="layui-nav-child">
+                        <dd>
+                            <a href="javascript:;" data-url="/12" data-title="广告管理" data-type="tabAdd" data-id="13" class="site-demo-active">广告管理</a>
+                        </dd>
+                        <dd>
+                            <a href="javascript:;" data-url="/13" data-title="营销活动" data-type="tabAdd" data-id="14" class="site-demo-active">营销活动</a>
+                        </dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item ">
+                    <a  href="javascript:;">&nbsp;&nbsp;通知中心</a>
+                    <dl class="layui-nav-child">
+                        <dd>
+                            <a href="javascript:;" data-url="/14" data-title="系统通知" data-type="tabAdd" data-id="15" class="site-demo-active">系统通知</a>
+                        </dd>
+                        <dd>
+                            <a href="javascript:;" data-url="/15" data-title="操作手册" data-type="tabAdd" data-id="16" class="site-demo-active">操作手册</a>
+                        </dd>
+                    </dl>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="layui-body">
+        <!-- tab主体区域 -->
+        <!--控制tab的水平位置-->
+        <div class="layui-tab" lay-filter="demo" lay-allowclose="true">
+            <!--显示tab的名字-->
+            <ul class="layui-tab-title">
+            </ul>
+            <!--右键菜单-->
+            <ul class="rightmenu">
+                <li data-type="closethis">
+                    <a href="#">关闭当前</a>
+                </li>
+                <li data-type="closeall">
+                    <a href="#">关闭所有</a>
+                </li>
+            </ul>
+            <!--显示内容-->
+            <div class="layui-tab-content">
+            </div>
+        </div>
+
+    </div>
+    <div class="layui-footer">
+        <!-- 底部固定区域 -->
+        © 乐鸽商户平台
+    </div>
+</div>
+<script src="/static/layui/js/layui.js"></script>
+<script>
+    layui.use(['element', 'tree'], function() {
+        var $ = layui.jquery;
+        var element = layui.element;
+        var tree = layui.tree;
+
+        //触发事件
+        var active = {
+            tabAdd: function(url, id, name) {
+                element.tabAdd('demo', {
+                    title: name,
+                    content: '<iframe data-frameid="' + id + '" scrolling="auto" frameborder="0" src="' + url + '.html" style="width:100%;height:99%;"></iframe>',
+                    id: id //规定好的id
+                })
+                CustomRightClick(id); //给tab绑定右击事件
+                FrameWH(); //计算ifram层的大小
+            },
+            tabChange: function(id) {
+                //切换到指定Tab项
+                element.tabChange('demo', id);
+            },
+            tabDelete: function(id) {
+                element.tabDelete("demo", id); //删除
+            },
+            tabDeleteAll: function(ids) { //删除所有
+                $.each(ids, function(i, item) {
+                    element.tabDelete("demo", item);
+                })
+            }
+        };
+
+        $(".site-demo-active").on("click", function() {
+            var dataid = $(this);
+
+            if($(".layui-tab-title li[lay-id]").length <= 0) {
+                active.tabAdd(dataid.attr("data-url"), dataid.attr("data-id"), dataid.attr("data-title"));
+            } else {
+
+                var isData = false;
+                $.each($(".layui-tab-title li[lay-id]"), function() {
+                    if($(this).attr("lay-id") == dataid.attr("data-id")) {
+                        isData = true;
+                    }
+                })
+                if(isData == false) {
+                    active.tabAdd(dataid.attr("data-url"), dataid.attr("data-id"), dataid.attr("data-title"));
+                }
+            }
+            active.tabChange(dataid.attr("data-id"));
+        });
+
+        function CustomRightClick(id) {
+            $('.layui-tab-title li').on('contextmenu', function() {
+                return false;
+            })
+            $('.layui-tab-title,.layui-tab-title li').click(function() {
+                $('.rightmenu').hide();
+            });
+            $('.layui-tab-title li').on('contextmenu', function(e) {
+                var popupmenu = $(".rightmenu");
+                popupmenu.find("li").attr("data-id", id); //在右键菜单中的标签绑定id属性
+
+                l = ($(document).width() - e.clientX) < popupmenu.width() ? (e.clientX - popupmenu.width()) : e.clientX;
+                t = ($(document).height() - e.clientY) < popupmenu.height() ? (e.clientY - popupmenu.height()) : e.clientY;
+                console.log("$(document).width(): " + $(document).width() + ", " + "e.clientX: " + e.clientX + ", popupmenu.width(): " + popupmenu.width());
+                console.log("$(document).height(): " + $(document).height() + ", " + "e.clientY: " + e.clientY + ", popupment.height(): " + popupmenu.height());
+                popupmenu.css({
+                    left: l - 190,
+                    top: t - 50
+                }).show(); //进行绝对定位
+                return false;
+            });
+        }
+
+        $(".rightmenu li").click(function() {
+
+            if($(this).attr("data-type") == "closethis") {
+                active.tabDelete($(this).attr("data-id"))
+            } else if($(this).attr("data-type") == "closeall") {
+                var tabtitle = $(".layui-tab-title li");
+                var ids = new Array();
+                $.each(tabtitle, function(i) {
+                    ids[i] = $(this).attr("lay-id");
+                })
+                active.tabDeleteAll(ids);
+            }
+
+            $('.rightmenu').hide();
+        })
+
+        function FrameWH() {
+            var h = $(window).height() - 41 - 10 - 60 - 10 - 44 - 10;
+            $("iframe").css("height", h + "px");
+        }
+
+        $(window).resize(function() {
+            FrameWH();
+        })
+    });
+</script>
+</body>
+
+</html>

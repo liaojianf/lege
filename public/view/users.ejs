@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>乐鸽商户平台</title>
+
+    <link rel="short icon"  href="/static/乐鸽.png"></link>
+</head>
+<!--<link rel="stylesheet" type="text/css" href="/static/layui/css/layui.css">-->
+<link rel="stylesheet" type="text/css" href="/static/layui/css/bootstrap.min.css">
+<body style=" background:
+url(/static/back/2.jpg) no-repeat center center fixed; background-size: 100%;">
+
+<br/>
+<button class="btn bg-primary" onclick="showcheck('批量删除')">删除已选项</button>
+<button class="btn bg-primary" onclick="checkAll()">全选</button>
+<select class="form-control" style="width: 250px;float: right;
+background-color: #2e6da4;color: white;border: 0px" id="select" >
+    <option value="1">数据插入</option>
+    <!--<option value="1">欢迎<%= role%>【<%= admin%>】登陆</option>-->
+    <option value="3">多条数据插入</option>
+    <option value="4">单条数据插入</option>
+    <!--<option value="2">退出登陆</option>-->
+</select>
+
+<table  class="table table-bordered" id="table">
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Age</th>
+        <th>Address</th>
+        <th>Img</th>
+        <th>Operation</th>
+    </tr>
+    </thead>
+    <%for(var i = 0;i<users.length;i++){%>
+    <tr>
+        <td>
+        <input type="checkbox" name="check" value="<%= users[i]._id%>" id="<%= users[i]._id%>"><%= users[i]._id%>
+        </td>
+        <td>
+            <%= users[i].name%>
+        </td>
+        <td>
+            <%= users[i].age%>
+        </td>
+        <td>
+            <%= users[i].address%>
+        </td>
+        <td>
+            <img src="/static/poacher/<%= users[i].name%>.png" style="width: 20px;height: 20px">
+        </td>
+        <td>
+            <button class="btn btn-warning" onclick="deletes('<%= users[i]._id%>','删除')">删除</button>
+            <button class="btn btn-warning" onclick="toupdateUser('<%= users[i]._id%>','更新')">更新</button>
+        </td>
+    </tr>
+    <%}%>
+</table>
+<button class="btn bg-success" id="previous">上一页</button>
+<%for( var i = 0;i<pageList.length;i++){%>
+<% if (i == num) { %>
+
+<a href="/getUser?num=<%= pageList[i]%>" style="color: #ac2925"><%= pageList[i]+1%></a>
+
+<% } else { %>
+
+<a href="/getUser?num=<%= pageList[i]%>"><%= pageList[i]+1%></a>
+
+<% } %>
+<%}%>
+<button class="btn bg-success" id="next">下一页</button>
+
+
+<script src="/static/jquery-3.5.1/jquery-3.5.1.js"></script>
+<script>
+
+    function toupdateUser(id,tip) {
+        $.ajax({
+            url:"/toupdateUsers",
+            type:"GET",
+            success:function(result){
+                window.location.href = "/toupdateUser?id="+id;
+            },
+            error:function (result){
+                alert("您的权限不足,不能执行"+tip+"操作");
+            }
+        });
+    }
+function deletes(id,tip) {
+    if(confirm("确认删除该员工吗？")) {
+        $.ajax({
+            url:"/deleteUser?id="+id,
+            type:"GET",
+            success:function(result){
+                window.location.href = "/getUser";
+            },
+            error:function (result) {
+                alert("您的权限不足,不能执行"+tip+"操作");
+            }
+        });
+    }
+
+
+}
+
+    //上一页
+    $("#previous").click(function (){
+        window.location.href = "/getUser?num=<%= num%>&cpage=-1"
+    })
+    //下一页
+    $("#next").click(function(){
+        window.location.href = "/getUser?num=<%= num%>&cpage=1"
+    })
+    //上下页设置不可选
+    $(function () {
+        if('<%= num%>' == 0){
+            $("#previous").attr("disabled",true);
+        }
+        if('<%= num%>' == '<%= pageList.length -1%>'){
+            $("#next").attr("disabled",true);
+        }
+        //链接去掉下划线
+        $("a").css("text-decoration", "none");
+
+        //下拉框内容
+        $("#select").change(function () {
+            if(this.value == 1){
+
+            }else if(this.value == 2){
+                window.location.href = "/loginout";
+            }else if(this.value == 3){
+                window.location.href = "/insertManyUser";
+            }
+            else if(this.value == 4){
+                window.location.href = "/toinsertUser";
+            }
+
+        })
+    })
+    //删除已选项
+    function showcheck(tip){
+        var checklist = ""
+      $('table input[name=check]:checked').each(function (i,data){
+          checklist  += data.value + "-";
+
+      });
+        //把最后一个字符去掉
+        checklist = checklist.substring(0, checklist.length-1);
+        if(confirm("确认删除所选员工吗？")){
+            $.ajax({
+                url:"/deleteAll?ids="+checklist,
+                type:"GET",
+                success:function(result){
+                    window.location.href = "/getUser?tip=0";
+                },
+                error:function (result) {
+                    alert("您的权限不足,不能执行"+tip+"操作");
+//                    window.location.href = "/getUser?tip=0";
+                }
+            });
+//            window.location.href = "/deleteAll?ids="+checklist;
+        }
+    }
+    //全选
+    function checkAll() {
+        if($('input[name=check]:checked').length === $('input[name=check]').length ) {
+            $('table input[name=check]:checked').each(function (i,data){
+                $("#"+data.value).prop("checked",false);
+            });
+        }else {
+            $('table input[name=check]').each(function (i,data){
+                $("#"+data.value).prop("checked",true);
+            });
+        }
+    }
+</script>
+</body>
+</html>
